@@ -206,8 +206,14 @@ const f = n => FL[n] || '🏳️';
 let FX = [];
 
 async function api(path) {
-  const r = await fetch(PROXY + '?path=' + encodeURIComponent(path));
+  // path looks like '/fixtures?league=1&season=2026'
+  const parts = path.split('?');
+  const endpoint = parts[0].replace('/','');
+  const params = parts[1] || '';
+  const url = PROXY + '?endpoint=' + endpoint + (params ? '&' + params : '');
+  const r = await fetch(url);
   const d = await r.json();
+  if (d.errors && Object.keys(d.errors).length) throw new Error(JSON.stringify(d.errors));
   return d.response || [];
 }
 
