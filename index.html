@@ -183,7 +183,7 @@ nav::-webkit-scrollbar{display:none}
 const WORKER = 'https://worldcup2026.vishal-vsrivastava.workers.dev';
 const IST = 5.5 * 3600000;
 
-const FL={'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czech Republic':'🇨🇿','Switzerland':'🇨🇭','Canada':'🇨🇦','Bosnia & Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','Turkey':'🇹🇷','USA':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Ecuador':'🇪🇨','Germany':'🇩🇪','Curaçao':'🇨🇼','Ivory Coast':'🇨🇮','Tunisia':'🇹🇳','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'};
+const FL={'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czech Republic':'🇨🇿','Switzerland':'🇨🇭','Canada':'🇨🇦','Bosnia & Herzegovina':'🇧🇦','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','Turkey':'🇹🇷','USA':'🇺🇸','United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Ecuador':'🇪🇨','Germany':'🇩🇪','Curaçao':'🇨🇼','Ivory Coast':'🇨🇮','Tunisia':'🇹🇳','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Democratic Republic of the Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'};
 const f = n => FL[n] || '🏳️';
 
 let GAMES = [];
@@ -230,8 +230,8 @@ async function loadAll() {
   btn.classList.remove('spin');
 }
 
-function isLive(g)  { return g.time_elapsed !== 'notstarted' && g.finished !== 'TRUE'; }
-function isDone(g)  { return g.finished === 'TRUE'; }
+function isLive(g)  { return g.time_elapsed !== 'notstarted' && g.time_elapsed !== 'finished' && g.finished !== 'TRUE'; }
+function isDone(g)  { return g.finished === 'TRUE' || g.time_elapsed === 'finished' || g.time_elapsed === 'Finished'; }
 function isUp(g)    { return g.time_elapsed === 'notstarted' && g.finished !== 'TRUE'; }
 
 function render() {
@@ -239,16 +239,17 @@ function render() {
   const done  = GAMES.filter(isDone).sort((a,b)=>+b.id-+a.id);
   const sched = GAMES.filter(isUp).sort((a,b)=>+a.id-+b.id);
 
-  // RESULTS
+  // RESULTS — show most recent first, limit to last 20
+  const recentDone = done.slice(0, 20);
   let r = '';
-  if (live.length) r += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
-  if (done.length) r += '<div class="sec">Results</div>' + done.map(mc).join('');
+  if (live.length)       r += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
+  if (recentDone.length) r += '<div class="sec">Results</div>' + recentDone.map(mc).join('');
   document.getElementById('p0').innerHTML = r || '<div class="msg">No results yet</div>';
 
   // SCHEDULE
   let s = '';
   if (live.length)  s += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
-  if (sched.length) s += '<div class="sec">Upcoming — all times IST</div>' + sched.map(mc).join('');
+  if (sched.length) s += '<div class="sec">Upcoming — all times IST</div>' + sched.slice(0,20).map(mc).join('');
   document.getElementById('p1').innerHTML = s || '<div class="msg">No upcoming matches</div>';
 
   // STANDINGS from groups endpoint
@@ -268,9 +269,13 @@ function mc(g) {
     ? `<div class="scb"><div class="sc ${hw?'w':live?'lv':''}">${hs}</div><div class="scd">–</div><div class="sc ${aw?'w':live?'lv':''}">${as}</div></div>`
     : `<div class="vs">VS</div>`;
 
-  // Goal scorers
-  const g1 = g.home_scorers && g.home_scorers !== 'null' ? g.home_scorers.split(',').map(s=>`<b>${s.trim()}</b>`).join('<br>') : '';
-  const g2 = g.away_scorers && g.away_scorers !== 'null' ? g.away_scorers.split(',').map(s=>`<b>${s.trim()}</b>`).join('<br>') : '';
+  // Goal scorers - parse the {"Name 45'"} format
+  function parseScorers(raw) {
+    if (!raw || raw === 'null') return '';
+    return raw.replace(/^{|}$/g,'').split('","').map(s=>s.replace(/^"|"$/g,'').replace(/\\"/g,'"').trim()).filter(Boolean).map(s=>`<b>${s}</b>`).join('<br>');
+  }
+  const g1 = parseScorers(g.home_scorers);
+  const g2 = parseScorers(g.away_scorers);
   const scorers = done && (g1||g2) ? `<div class="scorers"><div class="gs">${g1}</div><div class="gs r">${g2}</div></div>` : '';
 
   return `
@@ -304,14 +309,15 @@ function openMatch(id) {
       <div class="mft">${live?'🟢 LIVE · '+g.time_elapsed:'Full Time'} · ${istFmt(g.local_date)}</div>
     </div>`;
 
-  // Goals timeline
-  const goals = [];
-  if (g.home_scorers && g.home_scorers !== 'null') {
-    g.home_scorers.split(',').forEach(s => goals.push({name:s.trim(), team:h, side:'h'}));
+  // Goals timeline - parse {"Name 45'"} format
+  function parseScorerList(raw) {
+    if (!raw || raw === 'null') return [];
+    return raw.replace(/^{|}$/g,'').split('","').map(s=>s.replace(/^"|"$/g,'').replace(/\\"/g,'"').trim()).filter(Boolean);
   }
-  if (g.away_scorers && g.away_scorers !== 'null') {
-    g.away_scorers.split(',').forEach(s => goals.push({name:s.trim(), team:a, side:'a'}));
-  }
+  const goals = [
+    ...parseScorerList(g.home_scorers).map(name=>({name, team:h, side:'h'})),
+    ...parseScorerList(g.away_scorers).map(name=>({name, team:a, side:'a'}))
+  ];
 
   // Get team squad from TEAMS data
   const hTeam = TEAMS.find(t => t.name_en === h || t.name_en === g.home_team_name_en);
