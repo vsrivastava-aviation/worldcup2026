@@ -46,7 +46,7 @@ nav::-webkit-scrollbar{display:none}
 .tm{flex:1;display:flex;align-items:center;gap:7px}
 .tm.aw{flex-direction:row-reverse}
 .fl{font-size:24px;line-height:1;flex-shrink:0}
-.ab{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px}
+.ab{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px}
 .ab.w{color:var(--go)}
 .scb{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .sc{font-family:'Bebas Neue',sans-serif;font-size:30px;min-width:20px;text-align:center;line-height:1}
@@ -59,6 +59,7 @@ nav::-webkit-scrollbar{display:none}
 .gs.r{text-align:right}
 .gs b{color:var(--tx)}
 .hint{font-size:10px;color:var(--mu);text-align:center;margin-top:7px;opacity:.4}
+/* MODAL */
 .ovl{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(8px)}
 .ovl.on{display:flex}
 .sht{background:var(--sur);border-radius:20px 20px 0 0;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;border-top:1px solid var(--brd)}
@@ -67,41 +68,42 @@ nav::-webkit-scrollbar{display:none}
 .sttl{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px}
 .cls{width:28px;height:28px;background:var(--card);border:1px solid var(--brd);border-radius:7px;color:var(--mu);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
 .spg{padding:14px 16px 34px}
-.mhro{border:1px solid var(--brd);border-radius:13px;padding:18px 12px;margin:12px 16px 0}
+/* MATCH HERO */
+.mhro{border:1px solid var(--brd);border-radius:13px;padding:18px 12px;margin:12px 16px 0;background:rgba(0,200,240,.03)}
 .mhro.live{border-color:rgba(34,197,94,.4);background:#0d1a12}
 .mhr{display:flex;align-items:center;justify-content:space-between}
 .dt{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
 .dfl{font-size:36px}
-.dab{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px}
+.dab{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;text-align:center}
 .dab.w{color:var(--go)}
-.dnm{font-size:10px;color:var(--mu);text-align:center}
+.dnm{font-size:9px;color:var(--mu);text-align:center;line-height:1.3}
 .dsc{display:flex;align-items:center;gap:8px}
 .ds{font-family:'Bebas Neue',sans-serif;font-size:50px;line-height:1}
 .ds.w{color:var(--go)}
 .ds.lv{color:var(--lv)}
 .dsp{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--brd)}
 .mft{text-align:center;margin-top:8px;font-size:10px;color:var(--mu);letter-spacing:1px;text-transform:uppercase}
-.te{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid rgba(28,43,63,.5)}
-.te:last-child{border-bottom:none}
-.tmin{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--ac);min-width:28px;text-align:right}
-.tico{font-size:14px;width:18px;text-align:center}
+/* GOALS LIST */
+.ge{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid rgba(28,43,63,.5)}
+.ge:last-child{border-bottom:none}
+.tico{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 .ttxt{font-size:12px;flex:1;line-height:1.45}
 .ttag{font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;display:inline-block;margin-top:2px}
 .tth{background:rgba(0,200,240,.12);color:var(--ac)}
 .tta{background:rgba(245,158,11,.12);color:var(--go)}
-.lu-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.lu-col{background:var(--card);border:1px solid var(--brd);border-radius:11px;overflow:hidden}
-.lu-hd{padding:7px 10px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--brd)}
-.lu-hd.h{color:var(--ac);background:rgba(0,200,240,.06)}
-.lu-hd.a{color:var(--go);background:rgba(245,158,11,.06)}
-.lu-p{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid rgba(28,43,63,.4)}
-.lu-p:last-child{border-bottom:none}
-.pt{font-size:9px;font-weight:700;padding:2px 4px;border-radius:3px;min-width:24px;text-align:center;flex-shrink:0}
-.ptGK{background:rgba(239,68,68,.15);color:var(--rd)}
-.ptDF{background:rgba(16,185,129,.12);color:var(--gn)}
-.ptMD{background:rgba(0,200,240,.12);color:var(--ac)}
-.ptFW{background:rgba(245,158,11,.12);color:var(--go)}
-.pn{font-size:11px}
+/* STANDINGS */
+.gc{background:var(--card);border:1px solid var(--brd);border-radius:13px;margin-bottom:9px;overflow:hidden}
+.gh{padding:9px 13px;background:rgba(0,200,240,.05);border-bottom:1px solid var(--brd);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:var(--ac)}
+.sr{display:flex;align-items:center;padding:9px 13px;gap:8px;border-bottom:1px solid var(--brd);cursor:pointer}
+.sr:last-child{border-bottom:none}
+.sr:active{background:rgba(255,255,255,.03)}
+.srk{width:15px;text-align:center;font-size:11px;font-weight:700;color:var(--mu)}
+.srk.q{color:var(--go)}
+.srf{font-size:16px}
+.srn{flex:1;font-size:13px;font-weight:500}
+.srr{font-size:10px;color:var(--mu);min-width:54px;text-align:right}
+.srp{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--ac);min-width:20px;text-align:right}
+/* TEAM */
 .tmh{background:linear-gradient(135deg,rgba(0,200,240,.07),rgba(0,80,200,.04));padding:20px;text-align:center;border-bottom:1px solid var(--brd)}
 .tmf{font-size:48px;margin-bottom:7px}
 .tmn{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px}
@@ -117,22 +119,6 @@ nav::-webkit-scrollbar{display:none}
 .rofl{font-size:17px}
 .rop{flex:1;font-size:13px}
 .rsc{font-family:'Bebas Neue',sans-serif;font-size:15px}
-.sqg{margin-bottom:14px}
-.sqt{font-size:9px;letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--brd);margin-bottom:6px}
-.sqp{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(28,43,63,.3)}
-.sqp:last-child{border-bottom:none}
-.sqn{font-size:13px;font-weight:500}
-.gc{background:var(--card);border:1px solid var(--brd);border-radius:13px;margin-bottom:9px;overflow:hidden}
-.gh{padding:9px 13px;background:rgba(0,200,240,.05);border-bottom:1px solid var(--brd);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:var(--ac)}
-.sr{display:flex;align-items:center;padding:9px 13px;gap:8px;border-bottom:1px solid var(--brd);cursor:pointer}
-.sr:last-child{border-bottom:none}
-.sr:active{background:rgba(255,255,255,.03)}
-.srk{width:15px;text-align:center;font-size:11px;font-weight:700;color:var(--mu)}
-.srk.q{color:var(--go)}
-.srf{font-size:16px}
-.srn{flex:1;font-size:13px;font-weight:500}
-.srr{font-size:10px;color:var(--mu);min-width:54px;text-align:right}
-.srp{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--ac);min-width:20px;text-align:right}
 .msg{text-align:center;padding:30px 20px;color:var(--mu);font-size:13px;line-height:1.8}
 </style>
 </head>
@@ -145,7 +131,7 @@ nav::-webkit-scrollbar{display:none}
     </div>
     <button class="rfbtn" id="rfbtn" onclick="loadAll()">↻</button>
   </div>
-  <div class="sbar" id="sbar">Tap ↻ to load</div>
+  <div class="sbar" id="sbar">Tap ↻ to load latest data</div>
   <nav>
     <button class="tab on" onclick="goTab(0)">Results</button>
     <button class="tab"    onclick="goTab(1)">Schedule</button>
@@ -179,122 +165,140 @@ nav::-webkit-scrollbar{display:none}
 
 <script>
 'use strict';
-// Your Cloudflare Worker URL — proxies to worldcup26.ir (free, no API key)
-const WORKER = 'https://worldcup2026.vishal-vsrivastava.workers.dev';
+const W = 'https://worldcup2026.vishal-vsrivastava.workers.dev';
 const IST = 5.5 * 3600000;
 
-const FL={'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czech Republic':'🇨🇿','Switzerland':'🇨🇭','Canada':'🇨🇦','Bosnia & Herzegovina':'🇧🇦','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','Turkey':'🇹🇷','USA':'🇺🇸','United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Ecuador':'🇪🇨','Germany':'🇩🇪','Curaçao':'🇨🇼','Ivory Coast':'🇨🇮','Tunisia':'🇹🇳','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Democratic Republic of the Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'};
+// FLAGS
+const FL={'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czech Republic':'🇨🇿','Switzerland':'🇨🇭','Canada':'🇨🇦','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','Turkey':'🇹🇷','USA':'🇺🇸','United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Ecuador':'🇪🇨','Germany':'🇩🇪','Curaçao':'🇨🇼','Ivory Coast':'🇨🇮','Tunisia':'🇹🇳','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','Democratic Republic of the Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'};
 const f = n => FL[n] || '🏳️';
 
-let GAMES = [];
-let GROUPS = [];
-let TEAMS = [];
+let G = []; // all games
 
 function goTab(n){document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('on',i===n));[0,1,2].forEach(i=>document.getElementById('p'+i).classList.toggle('on',i===n));}
 function closeM(){document.getElementById('mOvl').classList.remove('on');document.body.style.overflow='';}
 function closeT(){document.getElementById('tOvl').classList.remove('on');document.body.style.overflow='';}
 
-function istFmt(dateStr) {
-  // dateStr format: "06/11/2026 13:00" (local match time)
-  // API provides local_date in match local time — convert to IST for display
-  const d = new Date(dateStr.replace(/(\d+)\/(\d+)\/(\d+)/,'$3-$1-$2'));
-  const ist = new Date(d.getTime() + IST);
-  return ist.toLocaleString('en-IN',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+// Parse the {\"Name 45'\"} scorer format
+function parseScorers(raw) {
+  if (!raw || raw === 'null' || raw === 'undefined') return [];
+  // Remove outer { } then split on ","
+  const inner = raw.replace(/^\{|\}$/g, '');
+  if (!inner) return [];
+  // Split on '","' 
+  return inner.split('","')
+    .map(s => s.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim())
+    .filter(Boolean);
 }
 
-async function getEndpoint(endpoint) {
-  const r = await fetch(WORKER + '?endpoint=' + endpoint);
-  const d = await r.json();
-  // API returns { games: [...] } or { groups: [...] } or { teams: [...] }
-  const key = Object.keys(d)[0];
-  return d[key] || [];
+function isDone(g) {
+  return g.finished === 'TRUE' || 
+         g.time_elapsed === 'finished' || 
+         g.time_elapsed === 'Finished';
+}
+function isLive(g) {
+  const te = g.time_elapsed;
+  return te !== 'notstarted' && te !== 'finished' && te !== 'Finished' && g.finished !== 'TRUE';
 }
 
+function fmtDate(d) {
+  // d = "06/27/2026 19:00" local US time — convert to IST roughly
+  try {
+    const [datePart, timePart] = d.split(' ');
+    const [mo, da, yr] = datePart.split('/');
+    const [hr, mn] = timePart.split(':');
+    // Local times are US times (UTC-7 approx), add ~12.5h for IST
+    const utcMs = Date.UTC(+yr, +mo-1, +da, +hr, +mn) + 7*3600000; // approx UTC
+    const istMs = utcMs + IST;
+    const ist = new Date(istMs);
+    return ist.toLocaleString('en-IN',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+  } catch(e) { return d; }
+}
+
+// LOAD — same function called on open and on refresh tap
 async function loadAll() {
   const btn = document.getElementById('rfbtn');
   btn.classList.add('spin');
   document.getElementById('sbar').innerHTML = 'Fetching latest data…';
   try {
-    // Fetch all data in parallel — 3 calls total
-    [GAMES, GROUPS, TEAMS] = await Promise.all([
-      getEndpoint('games'),
-      getEndpoint('groups'),
-      getEndpoint('teams'),
-    ]);
+    const res = await fetch(W + '?endpoint=games');
+    const json = await res.json();
+    G = json.games || [];
+    if (!G.length) throw new Error('No games in response');
     render();
-    const t = new Date(Date.now()+IST).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
-    document.getElementById('sbar').innerHTML = 'Updated <b>' + t + ' IST</b> · tap ↻ for latest';
+    const ist = new Date(Date.now()+IST).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+    document.getElementById('sbar').innerHTML = 'Updated <b>' + ist + ' IST</b> · tap ↻ for latest';
   } catch(e) {
-    document.getElementById('sbar').innerHTML = '⚠️ ' + e.message;
+    document.getElementById('sbar').innerHTML = '⚠️ Error: ' + e.message;
+    document.getElementById('p0').innerHTML = '<div class="msg">⚠️ ' + e.message + '</div>';
   }
   btn.classList.remove('spin');
 }
 
-function isLive(g)  { return g.time_elapsed !== 'notstarted' && g.time_elapsed !== 'finished' && g.finished !== 'TRUE'; }
-function isDone(g)  { return g.finished === 'TRUE' || g.time_elapsed === 'finished' || g.time_elapsed === 'Finished'; }
-function isUp(g)    { return g.time_elapsed === 'notstarted' && g.finished !== 'TRUE'; }
-
 function render() {
-  const live  = GAMES.filter(isLive).sort((a,b)=>+a.id-+b.id);
-  const done  = GAMES.filter(isDone).sort((a,b)=>+b.id-+a.id);
-  const sched = GAMES.filter(isUp).sort((a,b)=>+a.id-+b.id);
+  const done  = G.filter(isDone).sort((a,b) => +b.id - +a.id); // newest first
+  const live  = G.filter(isLive);
+  const sched = G.filter(g => !isDone(g) && !isLive(g) && g.home_team_name_en)
+                  .sort((a,b) => +a.id - +b.id);
 
-  // RESULTS — show most recent first, limit to last 20
-  const recentDone = done.slice(0, 20);
+  // RESULTS
   let r = '';
-  if (live.length)       r += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
-  if (recentDone.length) r += '<div class="sec">Results</div>' + recentDone.map(mc).join('');
+  if (live.length)  r += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
+  if (done.length)  r += '<div class="sec">Results</div>' + done.map(mc).join('');
   document.getElementById('p0').innerHTML = r || '<div class="msg">No results yet</div>';
 
   // SCHEDULE
   let s = '';
-  if (live.length)  s += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
-  if (sched.length) s += '<div class="sec">Upcoming — all times IST</div>' + sched.slice(0,20).map(mc).join('');
+  if (live.length)   s += '<div class="sec"><span class="ldot"></span>Live Now</div>' + live.map(mc).join('');
+  if (sched.length)  s += '<div class="sec">Upcoming</div>' + sched.map(mc).join('');
   document.getElementById('p1').innerHTML = s || '<div class="msg">No upcoming matches</div>';
 
-  // STANDINGS from groups endpoint
+  // STANDINGS computed from results
   renderStandings();
 }
 
 function mc(g) {
-  const live = isLive(g), done = isDone(g);
-  const h = g.home_team_name_en, a = g.away_team_name_en;
-  const hs = parseInt(g.home_score)||0, as = parseInt(g.away_score)||0;
-  const hw = done && hs>as, aw = done && as>hs;
-  const badge = live
-    ? `<span class="bdg blv"><span class="ldot"></span>${g.time_elapsed}</span>`
-    : done ? `<span class="bdg bft">FT</span>`
-    : `<span class="bdg bup">${istFmt(g.local_date).split(', ').pop()}</span>`;
-  const scoreBlock = (done||live)
+  const done = isDone(g), live = isLive(g);
+  const h = g.home_team_name_en || g.home_team_label || '?';
+  const a = g.away_team_name_en || g.away_team_label || '?';
+  const hs = parseInt(g.home_score) || 0;
+  const as = parseInt(g.away_score) || 0;
+  const hw = done && hs > as, aw = done && as > hs;
+
+  const badge = live ? `<span class="bdg blv"><span class="ldot"></span>LIVE</span>`
+              : done ? `<span class="bdg bft">FT</span>`
+              : `<span class="bdg bup">${fmtDate(g.local_date)}</span>`;
+
+  const scores = (done || live)
     ? `<div class="scb"><div class="sc ${hw?'w':live?'lv':''}">${hs}</div><div class="scd">–</div><div class="sc ${aw?'w':live?'lv':''}">${as}</div></div>`
     : `<div class="vs">VS</div>`;
 
-  // Goal scorers - parse the {"Name 45'"} format
-  function parseScorers(raw) {
-    if (!raw || raw === 'null') return '';
-    return raw.replace(/^{|}$/g,'').split('","').map(s=>s.replace(/^"|"$/g,'').replace(/\\"/g,'"').trim()).filter(Boolean).map(s=>`<b>${s}</b>`).join('<br>');
-  }
-  const g1 = parseScorers(g.home_scorers);
-  const g2 = parseScorers(g.away_scorers);
-  const scorers = done && (g1||g2) ? `<div class="scorers"><div class="gs">${g1}</div><div class="gs r">${g2}</div></div>` : '';
+  // Show scorers on card
+  const s1 = parseScorers(g.home_scorers);
+  const s2 = parseScorers(g.away_scorers);
+  const scorerHTML = done && (s1.length || s2.length)
+    ? `<div class="scorers">
+        <div class="gs">${s1.map(s=>`<b>${s}</b>`).join('<br>')}</div>
+        <div class="gs r">${s2.map(s=>`<b>${s}</b>`).join('<br>')}</div>
+       </div>` : '';
 
   return `
   <div class="mc ${live?'live':''} ${done||live?'tap':''}" ${done||live?`onclick="openMatch('${g.id}')"`:''}>
-    <div class="mct"><div class="mci">${istFmt(g.local_date)} · Group ${g.group}</div>${badge}</div>
+    <div class="mct"><div class="mci">Group ${g.group} · Matchday ${g.matchday}</div>${badge}</div>
     <div class="mcb">
       <div class="tm"><div class="fl">${f(h)}</div><div class="ab ${hw?'w':''}">${h}</div></div>
-      ${scoreBlock}
+      ${scores}
       <div class="tm aw"><div class="fl">${f(a)}</div><div class="ab ${aw?'w':''}">${a}</div></div>
     </div>
-    ${scorers}
-    ${done||live?'<div class="hint">Tap for details &amp; lineups</div>':''}
+    ${scorerHTML}
+    ${done||live?'<div class="hint">Tap for details</div>':''}
   </div>`;
 }
 
 function openMatch(id) {
-  const g = GAMES.find(x => x.id === id); if (!g) return;
-  const live = isLive(g), done = isDone(g);
-  const h = g.home_team_name_en, a = g.away_team_name_en;
+  const g = G.find(x => x.id === id); if (!g) return;
+  const done = isDone(g), live = isLive(g);
+  const h = g.home_team_name_en || g.home_team_label || '?';
+  const a = g.away_team_name_en || g.away_team_label || '?';
   const hs = parseInt(g.home_score)||0, as = parseInt(g.away_score)||0;
   const hw = hs>as, aw = as>hs;
 
@@ -306,128 +310,116 @@ function openMatch(id) {
         <div class="dsc"><div class="ds ${hw?'w':live?'lv':''}">${hs}</div><div class="dsp">:</div><div class="ds ${aw?'w':live?'lv':''}">${as}</div></div>
         <div class="dt"><div class="dfl">${f(a)}</div><div class="dab ${aw?'w':''}">${a}</div></div>
       </div>
-      <div class="mft">${live?'🟢 LIVE · '+g.time_elapsed:'Full Time'} · ${istFmt(g.local_date)}</div>
+      <div class="mft">${live?'🟢 LIVE':'Full Time'} · Group ${g.group} · Matchday ${g.matchday}</div>
     </div>`;
 
-  // Goals timeline - parse {"Name 45'"} format
-  function parseScorerList(raw) {
-    if (!raw || raw === 'null') return [];
-    return raw.replace(/^{|}$/g,'').split('","').map(s=>s.replace(/^"|"$/g,'').replace(/\\"/g,'"').trim()).filter(Boolean);
-  }
-  const goals = [
-    ...parseScorerList(g.home_scorers).map(name=>({name, team:h, side:'h'})),
-    ...parseScorerList(g.away_scorers).map(name=>({name, team:a, side:'a'}))
+  // Goals
+  const s1 = parseScorers(g.home_scorers);
+  const s2 = parseScorers(g.away_scorers);
+  const allGoals = [
+    ...s1.map(n=>({n,side:'h',team:h})),
+    ...s2.map(n=>({n,side:'a',team:a}))
   ];
 
-  // Get team squad from TEAMS data
-  const hTeam = TEAMS.find(t => t.name_en === h || t.name_en === g.home_team_name_en);
-  const aTeam = TEAMS.find(t => t.name_en === a || t.name_en === g.away_team_name_en);
-
-  document.getElementById('mBody').innerHTML = `
-    ${goals.length ? `
-    <div style="margin-bottom:16px">
-      <div class="sec" style="margin-top:0">Goals</div>
-      ${goals.map(g2=>`<div class="te"><div class="tico">⚽</div><div class="ttxt">${g2.name}<br><span class="ttag ${g2.side==='h'?'tth':'tta'}">${g2.team}</span></div></div>`).join('')}
-    </div>` : done ? '<div style="color:var(--mu);font-size:13px;margin-bottom:16px">Goalless draw</div>' : ''}
-    <div class="sec" style="margin-top:0">This group — Group ${g.group}</div>
-    ${renderGroupTable(g.group)}`;
+  document.getElementById('mBody').innerHTML = allGoals.length
+    ? '<div class="sec" style="margin-top:0">Goals</div>' +
+      allGoals.map(g2=>`
+        <div class="ge">
+          <div class="tico">⚽</div>
+          <div class="ttxt">${g2.n}<br>
+            <span class="ttag ${g2.side==='h'?'tth':'tta'}">${g2.team}</span>
+          </div>
+        </div>`).join('')
+    : '<div style="color:var(--mu);font-size:13px;padding:8px 0">' + (done?'Goalless draw':'Match in progress') + '</div>';
 
   document.getElementById('mOvl').classList.add('on');
-  document.body.style.overflow='hidden';
-}
-
-function renderGroupTable(groupId) {
-  const grp = GROUPS.find(g => g.group === groupId);
-  if (!grp || !grp.standings) return '<div style="color:var(--mu);font-size:13px">No standings data</div>';
-  return grp.standings.map((t,i) => `
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(28,43,63,.4)">
-      <div style="width:15px;text-align:center;font-size:11px;font-weight:700;color:${i<2?'var(--go)':'var(--mu)'}">${i+1}</div>
-      <div style="font-size:16px">${f(t.team_name_en)}</div>
-      <div style="flex:1;font-size:13px;font-weight:500">${t.team_name_en}</div>
-      <div style="font-size:10px;color:var(--mu);min-width:54px;text-align:right">${t.played||0}P ${t.won||0}W ${t.drawn||0}D ${t.lost||0}L</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--ac);min-width:20px;text-align:right">${t.points||0}</div>
-    </div>`).join('');
+  document.body.style.overflow = 'hidden';
 }
 
 function renderStandings() {
-  if (!GROUPS.length) {
-    document.getElementById('p2').innerHTML = '<div class="msg">Loading…</div>';
-    return;
-  }
-  document.getElementById('p2').innerHTML = GROUPS.map(grp => {
-    const rows = (grp.standings||[]).map((t,i) => `
-      <div class="sr" onclick="openTeam('${t.team_name_en}','${grp.group}')">
+  // Compute standings from results
+  const teams = {};
+  G.filter(isDone).forEach(g => {
+    const h = g.home_team_name_en, a = g.away_team_name_en;
+    if (!h || !a || !g.group || g.group.length > 2) return; // skip knockout
+    [h,a].forEach(n => { if(!teams[n]) teams[n]={n,grp:g.group,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}; });
+    const hg=parseInt(g.home_score)||0, ag=parseInt(g.away_score)||0;
+    teams[h].p++; teams[a].p++;
+    teams[h].gf+=hg; teams[h].ga+=ag;
+    teams[a].gf+=ag; teams[a].ga+=hg;
+    if(hg>ag){teams[h].w++;teams[h].pts+=3;teams[a].l++;}
+    else if(ag>hg){teams[a].w++;teams[a].pts+=3;teams[h].l++;}
+    else{teams[h].d++;teams[h].pts++;teams[a].d++;teams[a].pts++;}
+  });
+  // Also add upcoming teams so all 48 appear
+  G.filter(g=>!isDone(g)&&g.group&&g.group.length<=2).forEach(g=>{
+    [g.home_team_name_en,g.away_team_name_en].forEach(n=>{
+      if(n&&!teams[n])teams[n]={n,grp:g.group,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0};
+    });
+  });
+
+  const byG = {};
+  Object.values(teams).forEach(t=>{if(!byG[t.grp])byG[t.grp]=[];byG[t.grp].push(t);});
+  Object.values(byG).forEach(arr=>arr.sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf));
+
+  document.getElementById('p2').innerHTML = Object.keys(byG).sort().map(grp => {
+    const rows = byG[grp].map((t,i)=>`
+      <div class="sr" onclick="openTeam('${t.n.replace(/'/g,"\\'")}','${grp}')">
         <div class="srk ${i<2?'q':''}">${i+1}</div>
-        <div class="srf">${f(t.team_name_en)}</div>
-        <div class="srn">${t.team_name_en}</div>
-        <div class="srr">${t.won||0}W ${t.drawn||0}D ${t.lost||0}L</div>
-        <div class="srp">${t.points||0}</div>
+        <div class="srf">${f(t.n)}</div>
+        <div class="srn">${t.n}</div>
+        <div class="srr">${t.w}W ${t.d}D ${t.l}L</div>
+        <div class="srp">${t.pts}</div>
       </div>`).join('');
-    return `<div class="gc"><div class="gh">GROUP ${grp.group}</div>${rows}</div>`;
-  }).join('');
+    return `<div class="gc"><div class="gh">GROUP ${grp}</div>${rows}</div>`;
+  }).join('') || '<div class="msg">Standings loading…</div>';
 }
 
-function openTeam(name, group) {
-  const grp = GROUPS.find(g => g.group === group);
-  const standing = (grp?.standings||[]).find(t => t.team_name_en === name) || {};
-  const team = TEAMS.find(t => t.name_en === name) || {};
+function openTeam(name, grp) {
+  // Recompute this team's stats
+  const t = {p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0};
+  G.filter(isDone).forEach(g=>{
+    const h=g.home_team_name_en,a=g.away_team_name_en;
+    if(h!==name&&a!==name)return;
+    const hg=parseInt(g.home_score)||0,ag=parseInt(g.away_score)||0;
+    t.p++;
+    if(h===name){t.gf+=hg;t.ga+=ag;if(hg>ag){t.w++;t.pts+=3;}else if(ag>hg){t.l++;}else{t.d++;t.pts++;}}
+    else{t.gf+=ag;t.ga+=hg;if(ag>hg){t.w++;t.pts+=3;}else if(hg>ag){t.l++;}else{t.d++;t.pts++;}}
+  });
 
   document.getElementById('tTtl').textContent = name;
   document.getElementById('tHero').innerHTML = `
-    <div class="tmh">
-      <div class="tmf">${f(name)}</div>
-      <div class="tmn">${name}</div>
-      <div class="tms">Group ${group}</div>
-    </div>
+    <div class="tmh"><div class="tmf">${f(name)}</div><div class="tmn">${name}</div><div class="tms">Group ${grp}</div></div>
     <div class="tmst">
-      <div class="tmc"><div class="tmcv">${standing.points||0}</div><div class="tmcl">Pts</div></div>
-      <div class="tmc"><div class="tmcv">${standing.won||0}</div><div class="tmcl">Won</div></div>
-      <div class="tmc"><div class="tmcv">${standing.drawn||0}</div><div class="tmcl">Draw</div></div>
-      <div class="tmc"><div class="tmcv">${standing.lost||0}</div><div class="tmcl">Lost</div></div>
+      <div class="tmc"><div class="tmcv">${t.pts}</div><div class="tmcl">Pts</div></div>
+      <div class="tmc"><div class="tmcv">${t.w}</div><div class="tmcl">Won</div></div>
+      <div class="tmc"><div class="tmcv">${t.d}</div><div class="tmcl">Draw</div></div>
+      <div class="tmc"><div class="tmcv">${t.l}</div><div class="tmcl">Lost</div></div>
     </div>`;
 
-  // Results for this team
-  const played = GAMES.filter(g => isDone(g) && (g.home_team_name_en===name||g.away_team_name_en===name));
-  const resHTML = played.length
-    ? played.map(g => {
-        const ih = g.home_team_name_en===name;
-        const sc = ih?parseInt(g.home_score)||0:parseInt(g.away_score)||0;
-        const cc = ih?parseInt(g.away_score)||0:parseInt(g.home_score)||0;
-        const opp = ih?g.away_team_name_en:g.home_team_name_en;
-        const r = sc>cc?'W':sc<cc?'L':'D';
-        const c = r==='W'?'var(--gn)':r==='L'?'var(--rd)':'var(--mu)';
-        return `<div class="rr"><div class="rres" style="color:${c}">${r}</div><div class="rofl">${f(opp)}</div><div class="rop">${opp}</div><div class="rsc">${sc}–${cc}</div></div>`;
+  const played = G.filter(g=>(isDone(g)||isLive(g))&&(g.home_team_name_en===name||g.away_team_name_en===name));
+  document.getElementById('tBody').innerHTML = played.length
+    ? '<div class="sec" style="margin-top:0">Results</div>' +
+      played.map(g=>{
+        const ih=g.home_team_name_en===name;
+        const sc=ih?parseInt(g.home_score)||0:parseInt(g.away_score)||0;
+        const cc=ih?parseInt(g.away_score)||0:parseInt(g.home_score)||0;
+        const opp=ih?g.away_team_name_en:g.home_team_name_en;
+        const r=sc>cc?'W':sc<cc?'L':'D';
+        const c=r==='W'?'var(--gn)':r==='L'?'var(--rd)':'var(--mu)';
+        // Scorers for this team
+        const scorers=parseScorers(ih?g.home_scorers:g.away_scorers);
+        return `<div class="rr">
+          <div class="rres" style="color:${c}">${r}</div>
+          <div class="rofl">${f(opp)}</div>
+          <div class="rop">${opp}<br><small style="color:var(--mu)">${scorers.join(', ')}</small></div>
+          <div class="rsc">${sc}–${cc}</div>
+        </div>`;
       }).join('')
-    : '<div style="color:var(--mu);font-size:13px">No results yet</div>';
-
-  // Players from TEAMS data
-  const players = team.players || [];
-  const posOrder = ['Goalkeeper','Defender','Midfielder','Forward','Attacker'];
-  const posLbl = {Goalkeeper:'Goalkeepers',Defender:'Defenders',Midfielder:'Midfielders',Forward:'Forwards',Attacker:'Forwards'};
-  const posClr = {Goalkeeper:'var(--rd)',Defender:'var(--gn)',Midfielder:'var(--ac)',Forward:'var(--go)',Attacker:'var(--go)'};
-  const posCls = {Goalkeeper:'GK',Defender:'DF',Midfielder:'MD',Forward:'FW',Attacker:'FW'};
-  const byPos = {};
-  players.forEach(p => {
-    const pos = p.position || 'Midfielder';
-    if (!byPos[pos]) byPos[pos] = [];
-    byPos[pos].push(p.name_en || p.name);
-  });
-  const squadHTML = posOrder.map(pos => {
-    const pl = byPos[pos]; if (!pl?.length) return '';
-    return `<div class="sqg">
-      <div class="sqt" style="color:${posClr[pos]}">${posLbl[pos]}</div>
-      ${pl.map(n=>`<div class="sqp"><span class="pt pt${posCls[pos]}">${posCls[pos]}</span><span class="sqn">${n}</span></div>`).join('')}
-    </div>`;
-  }).join('');
-
-  document.getElementById('tBody').innerHTML = `
-    <div class="sec" style="margin-top:0">Results</div>
-    ${resHTML}
-    <div class="sec">Squad</div>
-    ${squadHTML || '<div style="color:var(--mu);font-size:13px">Squad data not available</div>'}`;
+    : '<div style="color:var(--mu);font-size:13px">No matches yet</div>';
 
   document.getElementById('tOvl').classList.add('on');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
 loadAll();
