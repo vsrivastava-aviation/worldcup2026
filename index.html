@@ -97,7 +97,7 @@ header{
   border-radius:4px;border:1px solid rgba(0,0,0,.12);
   box-shadow:0 1px 4px rgba(0,0,0,.2);flex-shrink:0;
 }
-.fi.lg{width:52px;height:35px;border-radius:6px}
+.fi.lg{width:44px;height:30px;border-radius:5px}
 .fi.xl{width:70px;height:47px;border-radius:8px;box-shadow:0 3px 12px rgba(0,0,0,.25)}
 .fi.sm{width:24px;height:16px;border-radius:3px}
 
@@ -119,22 +119,23 @@ header{
 .blv{background:rgba(0,230,118,.2);color:#00e676;border:1px solid rgba(0,230,118,.3)}
 .rc-body{padding:16px 14px 13px}
 .match-row{display:flex;align-items:center;gap:6px}
-.team-col{flex:1;display:flex;align-items:center;gap:9px;min-width:0}
+.team-col{flex:1;display:flex;align-items:center;gap:8px;min-width:0;max-width:38%}
 .team-col.right{flex-direction:row-reverse;text-align:right}
-.team-info{display:flex;flex-direction:column;gap:1px;min-width:0}
+.team-info{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
 .team-col.right .team-info{align-items:flex-end}
-.t-name{font-size:13px;font-weight:800;color:var(--tx);line-height:1.2;white-space:normal;word-break:break-word}
+.t-name{font-size:12px;font-weight:800;color:var(--tx);line-height:1.2;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .t-name.w{color:#145214}
 .t-code{font-size:9px;font-weight:600;color:var(--mu);letter-spacing:.5px}
 .score-mid{
   display:flex;flex-direction:column;align-items:center;gap:2px;
-  flex-shrink:0;min-width:80px;
+  flex-shrink:0;width:88px;
 }
-.score-pair{display:flex;align-items:center;gap:5px}
-.sn{font-family:'Bebas Neue',sans-serif;font-size:46px;line-height:1;color:var(--tx);min-width:26px;text-align:center}
+.score-pair{display:flex;align-items:center;gap:4px}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:var(--tx);min-width:24px;text-align:center}
 .sn.w{color:#145214}
 .sn.lv{color:#00a844}
-.sc-dash{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#c8e6c9}
+.sc-dash{font-family:'Bebas Neue',sans-serif;font-size:24px;color:#c8e6c9}
 .ft-lbl{font-size:9px;font-weight:700;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
 .ft-lbl.lv{color:#00a844}
 .scorers-row{
@@ -394,6 +395,13 @@ const CC={
   'Uzbekistan':'uz','England':'gb-eng','Ghana':'gh','Croatia':'hr','Panama':'pa'
 };
 
+// Short display names for long country names
+const SHORT={
+  'Democratic Republic of the Congo':'DR Congo',
+  'Bosnia and Herzegovina':'Bosnia & Herz.',
+};
+function shortName(n){return SHORT[n]||n;}
+
 // Country codes (3-letter display)
 const TLA={
   'Mexico':'MEX','South Africa':'RSA','South Korea':'KOR','Czech Republic':'CZE',
@@ -458,11 +466,11 @@ const SQ={
   'Argentina':['E. Martinez|GK','Molina N|DF','Romero C|DF','Lisandro Martinez|DF','Acuna M|DF','Mac Allister A|MD','De Paul R|MD','Fernandez E|MD','Di Maria A|FW','Alvarez J|FW','Messi L|FW'],
   'Austria':['Pentz P|GK','Posch S|DF','Danso K|DF','Wimmer K|DF','Wober M|DF','Seiwald N|MD','Laimer K|MD','Sabitzer M|MD','Kainz F|FW','Gregoritsch M|FW','Arnautovic M|FW'],
   'Algeria':['Mbolhi R|GK','Mandi A|DF','Benlamri D|DF','Ait Nouri R|DF','Bensebaini R|DF','Bennacer I|MD','Zerrouki R|MD','Boudaoui H|MD','Belaili Y|FW','Gouiri A|FW','Slimani I|FW'],
-  'Jordan':['Shnaishel Y|GK','Khraisat Y|DF','Al Rawabdeh A|DF','Bani Yaseen O|MD','Abu Zema M|MD','Al Rashdan Y|FW','Almardawi M|FW'],
+  'Jordan':['Shnaishel Y|GK','Abu Zema M|GK','Khraisat Y|DF','Al Rawabdeh A|DF','Bani Yaseen O|DF','Wreikat M|DF','Al Bawab M|DF','Al Ajalin M|MD','Al Nakhaleh A|MD','Al Rashdan Y|FW','Almardawi M|FW','Al Tamari M|FW'],
   'Colombia':['Vargas C|GK','Sanchez D|DF','Mina Y|DF','Cuesta J|DF','Mojica J|DF','Lerma J|MD','Castano W|MD','Rodriguez J|MD','Cuadrado J|FW','Diaz L|FW','Cordoba J|FW'],
   'Portugal':['Costa D|GK','Dalot D|DF','Dias R|DF','Pepe|DF','Guerreiro R|DF','Palhinha J|MD','Vitinha|MD','Fernandes B|MD','Neves J|MD','Leao R|FW','Ramos G|FW','Ronaldo C|FW'],
-  'Democratic Republic of the Congo':['Epassy A|GK','Mpasi C|DF','Boyata D|DF','Luyindama C|DF','Bongonda T|MD','Meschak Elia|MD','Chadrac Akolo|MD','Wissa Y|FW','Mbokani D|FW'],
-  'Uzbekistan':['Nematov A|GK','Ashurmatov S|DF','Jaloliddinov O|DF','Komilov A|MD','Turgunboev J|MD','Shomurodov E|FW','Djurayev D|FW'],
+  'Democratic Republic of the Congo':['Epassy A|GK','Kasanda C|GK','Boyata D|DF','Luyindama C|DF','Mpasi C|DF','Kakuta G|DF','Masuaku A|DF','Bongonda T|MD','Meschak Elia|MD','Chadrac Akolo|MD','Balele T|MD','Makengo N|MD','Wissa Y|FW','Mbokani D|FW','Bakambu C|FW'],
+  'Uzbekistan':['Nematov A|GK','Yusupov D|GK','Ashurmatov S|DF','Jaloliddinov O|DF','Komilov A|DF','Alijonov J|DF','Tukhtasinov B|DF','Turgunboev J|MD','Khannanov U|MD','Hamrobekov A|MD','Shomurodov E|FW','Djurayev D|FW','Toshmatov J|FW'],
   'England':['Pickford J|GK','Alexander-Arnold T|DF','Stones J|DF','Maguire H|DF','Trippier K|DF','Rice D|MD','Bellingham J|MD','Saka B|MD','Foden P|FW','Kane H|FW','Rashford M|FW'],
   'Ghana':['Ati Zigi L|GK','Salisu M|DF','Amartey D|DF','Lamptey T|DF','Mensah J|DF','Partey T|MD','Kudus M|MD','Sulley A|MD','Ayew A|FW','Sarr A|FW','Fatawu I|FW'],
   'Croatia':['Livakovic D|GK','Gvardiol J|DF','Lovren D|DF','Sutalo I|DF','Juranovic J|DF','Modric L|MD','Kovacic M|MD','Brozovic M|MD','Pasalic M|MD','Perisic I|FW','Kramaric A|FW'],
@@ -483,9 +491,21 @@ function tTab(n){document.querySelectorAll('#tOvl .stab').forEach((el,i)=>el.cla
 function closeM(){document.getElementById('mOvl').classList.remove('on');document.body.style.overflow='';}
 function closeT(){document.getElementById('tOvl').classList.remove('on');document.body.style.overflow='';}
 
+const NAME_FIX={"Hri Kin": "Harry Kane", "Jvd Blingham": "Jude Bellingham", "Jvhan Mnzambi": "Johan Manzambi", "Rvbn Vargas": "Rubén Vargas", "Dniz Avndav": "Deniz Undav", "Kvdi Khakpv": "Cody Gakpo", "Markvs Hlmgrn Pdrsn": "Marcus Holmgren Pedersen", "Jvlian Kviinvnz": "Julián Quiñones", "Taplv Maskv": "Thapelo Maseko", "Nzir Bnbvali": "Nacer Benbaali", "Nvnv Mndz": "Nuno Mendes", "Abdalvhid Namtvf": "Abdulvakhid Nematov", "Karim Alaibgvvich": "Karim Laib Guevich", "Abvnad": "Ahmed Touba", "Baris Alpr Ailmaz": "Barış Alper Yılmaz", "Kan Aihan": "Can Ayhan", "Aiash Ivida": "Ayase Ueda", "Hazm Mstvri": "Hazem Mastoura", "Alis Skhiri": "Ellyes Skhiri", "Ian Fn Hkh": "Jan van Hecke", "Nilsvn Angvlv": "Nilson Angulo", "Gvnzalv Plata": "Gonzalo Plata", "Nikvlas Ph Ph": "Nicolas Pépé", "Kamrvn Bargs": "Cameron Burgas", "Asmaail Saibari": "Ismaël Saïbari", "Svfian Rhimi": "Sofiane Rahimi", "Paph Gviih": "Pape Gueye", "Ailman Andiaih": "Aliou Ndiaye", "Prvmis Divid": "Promise David", "mikhal Sadilk": "Michal Sadílek", "\u202bmikhal Sadilk": "Michal Sadílek", "Rvmanv Ashmid": "Romano Ahmed", "Izn Alarb": "Izon Alarb", "Ali Avlvan": "Ali Alwan", "Abas Bk Fiz Allh Af": "Abbas Faiz Allahaf", "Dnil Mvnvz": "Daniel Muñoz", "Lviiz Diaz": "Luis Díaz", "Khamintvn Kampaz": "Jhon Arias", "Fin Svrman": "Finn Sorman", "Hliv Varla": "Helidon Varela", "Gessime Yassine": "Yassine El Ghanassy", "Hassan Mohamed Altmbkti": "Hassan Mohamed", "Alex Freeman": "Alex Freeman"};
+function fixName(raw){
+  // Fix garbled API player names
+  for(const[bad,good] of Object.entries(NAME_FIX)){
+    if(raw.includes(bad)) raw=raw.replace(bad,good);
+  }
+  return raw;
+}
+
 function parseScorers(raw){
   if(!raw||raw==='null')return[];
-  return raw.replace(/^\{|\}$/g,'').split('","').map(s=>s.replace(/^"|"$/g,'').replace(/\\"/g,'"').trim()).filter(Boolean);
+  return raw.replace(/^\{|\}$/g,'').split('","')
+    .map(s=>s.replace(/^"|"$/g,'').replace(/\\"/g,'"').trim())
+    .filter(Boolean)
+    .map(fixName);
 }
 function isDone(g){return g.finished==='TRUE'||g.time_elapsed==='finished'||g.time_elapsed==='Finished';}
 function isLive(g){const t=g.time_elapsed;return t&&t!=='notstarted'&&t!=='finished'&&t!=='Finished'&&g.finished!=='TRUE';}
@@ -591,7 +611,7 @@ function resCard(g){
         <div class="team-col">
           ${flagImg(h,'lg')}
           <div class="team-info">
-            <div class="team-nm ${hw?'w':''}">${h}</div>
+            <div class="team-nm ${hw?'w':''}">${shortName(h)}</div>
             <div class="t-code">${tla(h)}</div>
           </div>
         </div>
@@ -606,7 +626,7 @@ function resCard(g){
         <div class="team-col right">
           ${flagImg(a,'lg')}
           <div class="team-info">
-            <div class="team-nm ${aw?'w':''}">${a}</div>
+            <div class="team-nm ${aw?'w':''}">${shortName(a)}</div>
             <div class="t-code">${tla(a)}</div>
           </div>
         </div>
