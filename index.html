@@ -235,6 +235,7 @@ header{
 .msep{font-family:'Bebas Neue',sans-serif;font-size:30px;color:rgba(255,255,255,.25)}
 .mfoot{text-align:center;margin-top:10px;font-size:10px;color:rgba(255,255,255,.6);font-weight:600;letter-spacing:.5px}
 .live-pill{display:inline-block;background:rgba(0,230,118,.2);color:#69f0ae;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;border:1px solid rgba(0,230,118,.35);margin-bottom:7px}
+.pens-pill{display:inline-block;background:rgba(255,193,7,.18);color:var(--gold);font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;border:1px solid rgba(255,193,7,.35);margin-bottom:7px;letter-spacing:.5px}
 
 /* Goals */
 .gi{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(--brd)}
@@ -593,6 +594,32 @@ function render(){
   renderGroups();
 }
 
+// Real penalty shootout fields confirmed from live API:
+// home_penalty_score, away_penalty_score, home_penalty_scorers, away_penalty_scorers,
+// home_penalty_misses, away_penalty_misses
+function getPenScores(g){
+  const hp=g.home_penalty_score, ap=g.away_penalty_score;
+  if(hp==null||ap==null||hp==='null'||ap==='null'||hp===''||ap==='')return null;
+  const h=parseInt(hp), a=parseInt(ap);
+  if(isNaN(h)||isNaN(a))return null;
+  return {h, a};
+}
+function isPenWin(g){
+  return getPenScores(g) !== null;
+}
+
+function getPenDetails(g){
+  // Returns {home:[{name,scored}], away:[{name,scored}]} in shootout order (best effort, scorers then misses)
+  const hScorers=parseScorers(g.home_penalty_scorers).map(n=>({n,ok:true}));
+  const hMisses=parseScorers(g.home_penalty_misses).map(n=>({n,ok:false}));
+  const aScorers=parseScorers(g.away_penalty_scorers).map(n=>({n,ok:true}));
+  const aMisses=parseScorers(g.away_penalty_misses).map(n=>({n,ok:false}));
+  return {
+    home:[...hScorers,...hMisses],
+    away:[...aScorers,...aMisses]
+  };
+}
+
 function resCard(g){
   const live=isLive(g),ko=['r32','r16','qf','sf','final','third'].includes(g.type);
   const h=g.home_team_name_en||g.home_team_label||'TBD';
@@ -601,17 +628,23 @@ function resCard(g){
   const hw=!live&&hs>as,aw=!live&&as>hs;
   const s1=parseScorers(g.home_scorers),s2=parseScorers(g.away_scorers);
   const rnd=ko?(KO[g.type]||g.group):`Group ${g.group} · MD${g.matchday}`;
+  const pen=getPenScores(g);
+  const wentToPens=isPenWin(g);
+  // Determine winner: from penalty score if available, else assume need to flag uncertain
+  let penHw=false,penAw=false;
+  if(pen){penHw=pen.h>pen.a;penAw=pen.a>pen.h;}
+  const ftLabel=pen?`FT ${hs}-${as} · PENS ${pen.h}-${pen.a}`:wentToPens?'FULL TIME (PENS)':'FULL TIME';
   return`<div class="rc ${live?'live':''}" onclick="openMatch('${g.id}')">
     <div class="rc-hdr">
       <div class="rc-meta">${rnd} &nbsp;·&nbsp; ${fmtIST(getMs(g))}</div>
-      ${live?'<span class="bdg blv"><span class="ldot"></span>LIVE</span>':'<span class="bdg bft">FT</span>'}
+      ${live?'<span class="bdg blv"><span class="ldot"></span>LIVE</span>':wentToPens?'<span class="bdg bft">FT-PENS</span>':'<span class="bdg bft">FT</span>'}
     </div>
     <div class="rc-body">
       <div class="match-row">
         <div class="team-col">
           ${flagImg(h,'lg')}
           <div class="team-info">
-            <div class="team-nm ${hw?'w':''}">${shortName(h)}</div>
+            <div class="team-nm ${hw||penHw?'w':''}">${shortName(h)}</div>
             <div class="t-code">${tla(h)}</div>
           </div>
         </div>
@@ -621,12 +654,12 @@ function resCard(g){
             <div class="sc-dash">–</div>
             <div class="sn ${aw?'w':live?'lv':''}">${as}</div>
           </div>
-          <div class="ft-lbl ${live?'lv':''}">${live?'🟢 LIVE':'FULL TIME'}</div>
+          <div class="ft-lbl ${live?'lv':''}">${live?'🟢 LIVE':wentToPens?(pen?`PENS ${pen.h}-${pen.a}`:'WENT TO PENALTIES'):'FULL TIME'}</div>
         </div>
         <div class="team-col right">
           ${flagImg(a,'lg')}
           <div class="team-info">
-            <div class="team-nm ${aw?'w':''}">${shortName(a)}</div>
+            <div class="team-nm ${aw||penAw?'w':''}">${shortName(a)}</div>
             <div class="t-code">${tla(a)}</div>
           </div>
         </div>
@@ -676,14 +709,20 @@ function openMatch(id){
   const ko=['r32','r16','qf','sf','final','third'].includes(g.type);
   const rnd=ko?(KO[g.type]||g.group):`Group ${g.group} · MD${g.matchday}`;
 
+  const pen=getPenScores(g);
+  const wentToPens=isPenWin(g);
+  let penHw=false,penAw=false;
+  if(pen){penHw=pen.h>pen.a;penAw=pen.a>pen.h;}
+  const heroHw=hw||penHw,heroAw=aw||penAw;
   document.getElementById('mTtl').textContent=h+' vs '+a;
   document.getElementById('mHero').innerHTML=`
     <div class="mhero ${live?'live':''}">
       ${live?'<div style="text-align:center;margin-bottom:8px"><span class="live-pill"><span class="ldot"></span> LIVE NOW</span></div>':''}
+      ${wentToPens?'<div style="text-align:center;margin-bottom:8px"><span class="pens-pill">⚽ DECIDED ON PENALTIES</span></div>':''}
       <div class="mhr">
         <div class="mteam">
           ${CC[h]?`<img src="https://flagcdn.com/h80/${CC[h]}.png" class="mflag" alt="${h}" onerror="this.outerHTML='<span style=font-size:36px>🏳️</span>'">`:'<span style="font-size:36px">🏳️</span>'}
-          <div class="mname ${hw?'w':''}">${h}</div>
+          <div class="mname ${heroHw?'w':''}">${h}</div>
         </div>
         <div class="mscores">
           <div class="ms ${hw?'w':live?'lv':''}">${hs}</div>
@@ -692,17 +731,34 @@ function openMatch(id){
         </div>
         <div class="mteam">
           ${CC[a]?`<img src="https://flagcdn.com/h80/${CC[a]}.png" class="mflag" alt="${a}" onerror="this.outerHTML='<span style=font-size:36px>🏳️</span>'">`:'<span style="font-size:36px">🏳️</span>'}
-          <div class="mname ${aw?'w':''}">${a}</div>
+          <div class="mname ${heroAw?'w':''}">${a}</div>
         </div>
       </div>
+      ${pen?`<div style="text-align:center;margin-top:8px"><span style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);letter-spacing:2px">PENALTIES ${pen.h} – ${pen.a}</span></div>`:wentToPens?'<div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.6);font-weight:600">Match went to penalty shootout</div>':''}
       <div class="mfoot">${rnd} &nbsp;·&nbsp; ${fmtIST(getMs(g))} IST</div>
     </div>`;
 
   const s1=parseScorers(g.home_scorers),s2=parseScorers(g.away_scorers);
   const allG=[...s1.map(n=>({n,side:'h',t:h})),...s2.map(n=>({n,side:'a',t:a}))];
-  document.getElementById('ms0').innerHTML=allG.length
+  let goalsHTML=allG.length
     ?allG.map(x=>`<div class="gi"><div class="g-ico">⚽</div><div class="g-txt">${x.n}<br><span class="gtag ${x.side}">${x.t}</span></div></div>`).join('')
     :`<div style="color:var(--mu);font-size:13px;padding:16px 0;text-align:center;font-weight:500">${done?'No goals — goalless draw ⚽':'Match in progress…'}</div>`;
+
+  // Penalty shootout breakdown (if applicable)
+  if(pen){
+    const pd=getPenDetails(g);
+    const penRow=(p,side,team)=>`<div class="gi"><div class="g-ico">${p.ok?'⚽':'❌'}</div><div class="g-txt">${p.n}<br><span class="gtag ${side}">${team}</span></div></div>`;
+    const maxLen=Math.max(pd.home.length,pd.away.length);
+    let shootoutRows='';
+    for(let i=0;i<maxLen;i++){
+      if(pd.home[i])shootoutRows+=penRow(pd.home[i],'h',h);
+      if(pd.away[i])shootoutRows+=penRow(pd.away[i],'a',a);
+    }
+    if(shootoutRows){
+      goalsHTML+=`<div class="sec" style="margin-top:18px">🥅 Penalty Shootout — ${pen.h}-${pen.a}</div>${shootoutRows}`;
+    }
+  }
+  document.getElementById('ms0').innerHTML=goalsHTML;
 
   if(done||live){
     const seed=hs*17+as*13+(g.id%7);
