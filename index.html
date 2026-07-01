@@ -126,6 +126,7 @@ header{background:linear-gradient(180deg,#072107,#0d3d0d);border-bottom:2px soli
 .bksc.w{color:#145214}
 .bkpen{font-size:7px;font-weight:800;color:#c8930a;text-align:center;padding:1px 4px;background:rgba(255,193,7,.12);letter-spacing:.3px}
 .bkdate{font-size:7px;color:#607d6b;text-align:center;padding:2px 4px;background:#f9fbe7;border-top:1px solid #e8f5e9;font-weight:600;letter-spacing:.2px}
+.bkfl-ph{width:16px;height:11px;display:inline-block;flex-shrink:0}
 
 /* MODAL */
 .ovl{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(10px)}
@@ -526,102 +527,225 @@ function bktCard(g){
   </div>`;
 }
 
+
+// ══════════════════════════════════════════════════
+// BRACKET — CSS Grid with precise row positioning
+// Each R32 = 2 rows, R16 centred between its 2 R32s
+// ══════════════════════════════════════════════════
+
+// R32 pairs → R16 mapping (verified from live API):
+// Pair[0]: R32#73 + R32#76 → R16#89
+// Pair[1]: R32#74 + R32#77 → R16#90
+// Pair[2]: R32#75 + R32#78 → R16#91
+// Pair[3]: R32#79 + R32#80 → R16#92
+// Pair[4]: R32#81 + R32#82 → R16#94
+// Pair[5]: R32#83 + R32#84 → R16#93
+// Pair[6]: R32#85 + R32#87 → R16#96
+// Pair[7]: R32#86 + R32#88 → R16#95
+// R16 pairs → QF: [89+90→97], [91+92→99], [94+93→98], [96+95→100]
+// QF pairs  → SF: [97+99→101], [98+100→102]
+// SF → Final: [101+102→104]
+
+const BKT = {
+  r32pairs: [
+    ['73','76'], ['74','77'], ['75','78'], ['79','80'],
+    ['81','82'], ['83','84'], ['85','87'], ['86','88']
+  ],
+  r16: ['89','90','91','92','94','93','96','95'],
+  qf:  ['97','99','98','100'],
+  sf:  ['101','102'],
+  fin: ['104']
+};
+
 function renderBracket(){
-  const gm=id=>G.find(g=>g.id===id)||null;
+  const gm = id => G.find(g=>g.id===id) || null;
 
-  const rounds=[
-    {lbl:'Round of 32', groups:BKT_IDS},
-    {lbl:'Round of 16', ids:R16_IDS},
-    {lbl:'Quarter-Finals',ids:QF_IDS},
-    {lbl:'Semi-Finals',  ids:SF_IDS},
-    {lbl:'🏆 Final',    ids:FIN_IDS},
-  ];
+  function bktWin(g){
+    if(!g||!isDone(g))return null;
+    const pen=getPen(g);
+    if(pen)return pen.h>pen.a?g.home_team_name_en:g.away_team_name_en;
+    const hs=parseInt(g.home_score)||0,as=parseInt(g.away_score)||0;
+    return hs>as?g.home_team_name_en:as>hs?g.away_team_name_en:null;
+  }
 
-  let html=`<div class="bkt-scroll"><div class="bkt-inner" id="bktInner">`;
+  function teamFlag(name){
+    if(!name)return'<span class="bkfl-ph"></span>';
+    const c=CC[name]||CC[sn(name)];
+    if(!c)return'<span class="bkfl-ph"></span>';
+    return`<img class="bkfl" src="https://flagcdn.com/h32/${c}.png" alt="" onerror="this.style.display='none'">`;
+  }
 
-  rounds.forEach(({lbl,groups,ids},ri)=>{
-    html+=`<div class="bkt-round" id="bktr${ri}">
-      <div class="bkt-rhdr">${lbl}</div>
-      <div class="bkt-col" id="bktc${ri}">`;
-
-    if(groups){
-      // R32: render in pairs so each pair is visually adjacent
-      groups.forEach(([id1,id2])=>{
-        html+=`<div style="display:flex;flex-direction:column;justify-content:center;flex:1">`;
-        html+=bktCard(gm(id1));
-        html+=bktCard(gm(id2));
-        html+=`</div>`;
-      });
-    } else {
-      // R16/QF/SF/Final: each match is centred between the two R32 pairs that feed it
-      ids.forEach(id=>{
-        html+=`<div style="display:flex;flex-direction:column;justify-content:center;align-items:stretch;flex:1">`;
-        html+=bktCard(gm(id));
-        html+=`</div>`;
-      });
+  function dispName(rawName, isTBD){
+    if(isTBD){
+      return rawName
+        .replace('Winner Match ','M')
+        .replace('Runner-up Group ','2nd ')
+        .replace('Winner Group ','Grp ')
+        .replace('3rd Group','3rd ')
+        .replace('Loser Match ','L');
     }
+    return sn(rawName);
+  }
 
-    html+=`</div></div>`;
-
-    // Connector column between rounds
-    if(ri<rounds.length-1){
-      html+=`<div class="bkt-conn" id="bktconn${ri}"></div>`;
+  function bkCard(g, rowStart, rowEnd, col){
+    if(!g){
+      return`<div class="bkm" style="grid-column:${col};grid-row:${rowStart}/${rowEnd}"></div>`;
     }
-  });
+    const done=isDone(g), live=isLive(g);
+    const h=g.home_team_name_en||g.home_team_label||'TBD';
+    const a=g.away_team_name_en||g.away_team_label||'TBD';
+    const hs=parseInt(g.home_score)||0, as2=parseInt(g.away_score)||0;
+    const pen=getPen(g);
+    const w=bktWin(g);
+    const hw=w&&w===g.home_team_name_en, aw=w&&w===g.away_team_name_en;
+    const isTBDh=!g.home_team_name_en||h.startsWith('Winner')||h.startsWith('Runner')||h.startsWith('Loser')||h.startsWith('3rd');
+    const isTBDa=!g.away_team_name_en||a.startsWith('Winner')||a.startsWith('Runner')||a.startsWith('Loser')||a.startsWith('3rd');
+    const dh=dispName(h,isTBDh), da=dispName(a,isTBDa);
+    const showSc=done||live;
+    const cls=(pen?'pen':live?'live':done?'done':'')+(done||live?' tap':'');
+    const onclick=done||live?`onclick="openMatch('${g.id}')"`:'' ;
+    const ms=getMs(g);
+    return`<div class="bkm ${cls}" style="grid-column:${col};grid-row:${rowStart}/${rowEnd}" ${onclick}>
+      <div class="bkrow">
+        ${teamFlag(isTBDh?null:h)}
+        <span class="bkname ${hw?'w':''} ${isTBDh?'tbd':''}">${dh}</span>
+        ${showSc?`<span class="bksc ${hw?'w':''}">${hs}</span>`:''}
+      </div>
+      <div class="bkrow">
+        ${teamFlag(isTBDa?null:a)}
+        <span class="bkname ${aw?'w':''} ${isTBDa?'tbd':''}">${da}</span>
+        ${showSc?`<span class="bksc ${aw?'w':''}">${as2}</span>`:''}
+      </div>
+      ${pen?`<div class="bkpen">PENS ${pen.h}–${pen.a}</div>`:''}
+      <div class="bkdate">${fmtShortIST(ms)}</div>
+    </div>`;
+  }
 
-  html+=`</div></div>`;
-  document.getElementById('p2').innerHTML=html;
-  setTimeout(drawConnectors,150);
+  // Row formula:
+  // R32[i]: rows (i*2+1) to (i*2+3)
+  // R16[i]: rows (i*4+2) to (i*4+6)   — centred between R32[i*2] and R32[i*2+1]
+  // QF[i]:  rows (i*8+4) to (i*8+12)
+  // SF[i]:  rows (i*16+8) to (i*16+24)
+  // Final:  rows 12 to 22
+
+  let cards = '';
+
+  // R32 — column 1
+  const r32flat = BKT.r32pairs.flat(); // 16 ids in order
+  for(let i=0;i<16;i++){
+    const rs=i*2+1, re=i*2+3;
+    cards += bkCard(gm(r32flat[i]), rs, re, 1);
+  }
+
+  // R16 — column 3
+  for(let i=0;i<8;i++){
+    const rs=i*4+2, re=i*4+6;
+    cards += bkCard(gm(BKT.r16[i]), rs, re, 3);
+  }
+
+  // QF — column 5
+  for(let i=0;i<4;i++){
+    const rs=i*8+4, re=i*8+12;
+    cards += bkCard(gm(BKT.qf[i]), rs, re, 5);
+  }
+
+  // SF — column 7
+  for(let i=0;i<2;i++){
+    const rs=i*16+8, re=i*16+24;
+    cards += bkCard(gm(BKT.sf[i]), rs, re, 7);
+  }
+
+  // Final — column 9, centred at row 16
+  cards += bkCard(gm(BKT.fin[0]), 12, 22, 9);
+
+  // SVG connectors will be drawn after render
+  const html = `
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;padding:10px 8px 30px">
+    <div style="min-width:800px">
+      <div style="display:grid;grid-template-columns:150px 28px 150px 28px 150px 28px 150px 28px 150px;margin-bottom:6px">
+        ${['Round of 32','','Round of 16','','Quarter-Finals','','Semi-Finals','','🏆 Final'].map((l,i)=>
+          l?`<div style="font-size:7px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#ffc107;text-align:center;padding:4px 6px;background:rgba(255,193,7,.1);border-radius:6px">${l}</div>`
+          :'<div></div>'
+        ).join('')}
+      </div>
+      <div id="bktGrid" style="display:grid;grid-template-columns:150px 28px 150px 28px 150px 28px 150px 28px 150px;grid-template-rows:repeat(32,34px);position:relative;gap:2px 0">
+        ${cards}
+        <svg id="bktSvg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible"></svg>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById('p2').innerHTML = html;
+  setTimeout(drawBktConnectors, 120);
 }
 
-function drawConnectors(){
-  for(let ri=0;ri<4;ri++){
-    const fromCol=document.getElementById('bktc'+ri);
-    const connEl=document.getElementById('bktconn'+ri);
-    const toCol=document.getElementById('bktc'+(ri+1));
-    if(!fromCol||!connEl||!toCol)continue;
+function drawBktConnectors(){
+  const grid = document.getElementById('bktGrid');
+  const svg  = document.getElementById('bktSvg');
+  if(!grid||!svg)return;
 
-    // From: all .bkm cards in fromCol
-    // To: all .bkm cards in toCol
-    // Each pair of adjacent from-cards connects to one to-card
-    const fromCards=[...fromCol.querySelectorAll('.bkm')];
-    const toCards=[...toCol.querySelectorAll('.bkm')];
-    if(!fromCards.length||!toCards.length)continue;
+  const gr = grid.getBoundingClientRect();
+  let paths = '';
 
-    const cRect=connEl.getBoundingClientRect();
-    const W=connEl.offsetWidth||32;
-    const H=connEl.offsetHeight||100;
+  // Helper: get card centre-right and centre-left positions relative to grid
+  function cardRight(el){
+    const r=el.getBoundingClientRect();
+    return{x:r.right-gr.left, y:r.top+r.height/2-gr.top};
+  }
+  function cardLeft(el){
+    const r=el.getBoundingClientRect();
+    return{x:r.left-gr.left, y:r.top+r.height/2-gr.top};
+  }
 
-    let paths='';
+  // Get all cards by grid column (col attribute on grid-column style)
+  function cardsInCol(col){
+    return [...grid.querySelectorAll('.bkm')].filter(el=>{
+      const gs=el.style.gridColumn;
+      return gs&&parseInt(gs)===col;
+    }).sort((a,b)=>{
+      return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+    });
+  }
+
+  const col1=cardsInCol(1); // R32 (16 cards)
+  const col3=cardsInCol(3); // R16 (8 cards)
+  const col5=cardsInCol(5); // QF  (4 cards)
+  const col7=cardsInCol(7); // SF  (2 cards)
+  const col9=cardsInCol(9); // Final (1 card)
+
+  function drawConn(fromCards, toCards, connColX){
     const pairs=toCards.length;
-
     for(let i=0;i<pairs;i++){
-      const f1=fromCards[i*2];
-      const f2=fromCards[i*2+1];
-      const t=toCards[i];
+      const f1=fromCards[i*2], f2=fromCards[i*2+1], t=toCards[i];
       if(!f1||!t)continue;
-
-      const f1r=f1.getBoundingClientRect();
-      const f2r=f2?f2.getBoundingClientRect():f1r;
-      const tr=t.getBoundingClientRect();
-
-      // Y positions relative to connector column
-      const y1=f1r.top+f1r.height/2-cRect.top;
-      const y2=f2r.top+f2r.height/2-cRect.top;
-      const yt=tr.top+tr.height/2-cRect.top;
-      const mx=W/2;
-
-      // Line from f1 right edge → midpoint → down/up to yt → right edge of connector
-      paths+=`<path d="M0,${y1} H${mx} V${yt} H${W}" fill="none" stroke="#a5d6a7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      const p1=cardRight(f1), t1=cardLeft(t);
+      const mx=connColX; // midpoint x in connector column
+      // From f1 right → horizontal to midpoint → vertical to target y → horizontal to target left
+      paths+=`<path d="M${p1.x},${p1.y} H${mx} V${t1.y} H${t1.x}" fill="none" stroke="#a5d6a7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      // From f2 right → horizontal to midpoint (where it meets the vertical above)
       if(f2){
-        // Line from f2 right edge → same midpoint x (already connected above at yt)
-        paths+=`<path d="M0,${y2} H${mx}" fill="none" stroke="#a5d6a7" stroke-width="1.5" stroke-linecap="round"/>`;
+        const p2=cardRight(f2);
+        paths+=`<path d="M${p2.x},${p2.y} H${mx}" fill="none" stroke="#a5d6a7" stroke-width="1.5" stroke-linecap="round"/>`;
       }
     }
-
-    connEl.innerHTML=`<svg width="${W}" height="${Math.max(H,10)}" style="display:block;overflow:visible;position:absolute;top:0;left:0">${paths}</svg>`;
   }
+
+  // Connector column midpoint X positions
+  const colXs = [0, 150, 178, 328, 356, 506, 534, 684, 712]; // approx x of col midpoints
+  // Better: compute from actual grid positions
+  // col1 right edge ≈ 150, col3 starts at 150+28=178 → connector midpoint = 150+14=164
+  // col3 right edge ≈ 178+150=328, col5 starts at 356 → connector midpoint ≈ 342
+  // col5 right edge ≈ 506, col7 starts at 534 → connector midpoint ≈ 520
+  // col7 right edge ≈ 684, col9 starts at 712 → connector midpoint ≈ 698
+
+  if(col1.length>=2&&col3.length>=1) drawConn(col1,col3,164);
+  if(col3.length>=2&&col5.length>=1) drawConn(col3,col5,342);
+  if(col5.length>=2&&col7.length>=1) drawConn(col5,col7,520);
+  if(col7.length>=2&&col9.length>=1) drawConn(col7,col9,698);
+
+  svg.innerHTML=paths;
 }
+
 
 function renderGroups(){
   const teams={};
