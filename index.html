@@ -331,6 +331,41 @@ function fmtDate(ms){return new Date(ms).toLocaleDateString('en-IN',{weekday:'lo
 function fmtShortIST(ms){return new Date(ms).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'});}
 const KO={r32:'Round of 32',r16:'Round of 16',qf:'Quarter-Final',sf:'Semi-Final',final:'🏆 Final',third:'3rd Place'};
 
+
+const SQ={
+  'Mexico':['Rangel R|GK','Ochoa G|GK','Montes C|DF','Alvarez E|DF','Sanchez J|DF','Chavez M|DF','Romo L|MD','Mora G|MD','Alvarado R|MD','Quinones J|FW','Gimenez S|FW','Jimenez R|FW'],
+  'South Africa':['Williams R|GK','Mudau K|DF','Okon I|DF','Modiba A|DF','Sithole S|MD','Mbatha T|MD','Maseko T|FW','Mofokeng R|FW','Makgopa E|FW'],
+  'Brazil':['Alisson|GK','Marquinhos|DF','Gabriel Magalhaes|DF','Danilo|DF','Douglas Santos|DF','Bruno Guimaraes|MD','Casemiro|MD','Lucas Paqueta|MD','Vinicius Junior|FW','Matheus Cunha|FW','Martinelli|FW'],
+  'Morocco':['Bounou Y|GK','Hakimi A|DF','Riad C|DF','Halhal R|DF','Amrabat S|MD','El Khannouss B|MD','Brahim Diaz|FW','El Kaabi A|FW'],
+  'Germany':['Neuer M|GK','Ruediger A|DF','Tah J|DF','Kimmich J|DF','Raum D|DF','Musiala J|MD','Wirtz F|MD','Havertz K|FW','Undav D|FW','Sane L|FW'],
+  'Paraguay':['Gill O|GK','Caceres JJ|DF','Gomez G|DF','Alderete O|DF','Cubas A|MD','Galarza M|MD','Enciso J|FW','Sanabria A|FW'],
+  'France':['Maignan M|GK','Kounde J|DF','Konate I|DF','Upamecano D|DF','Hernandez T|DF','Tchouameni A|MD','Camavinga E|MD','Dembele O|FW','Barcola B|FW','Mbappe K|FW'],
+  'Sweden':['Widell Zetterstrom J|GK','Lindelof V|DF','Hien I|DF','Bergvall L|MD','Ayari Y|MD','Gyokeres V|FW','Isak A|FW','Elanga A|FW'],
+  'Netherlands':['Verbruggen B|GK','Van Dijk V|DF','Ake N|DF','Dumfries D|DF','De Jong F|MD','Gravenberch R|MD','Reijnders T|MD','Gakpo C|FW','Brobbey B|FW'],
+  'Ivory Coast':['Fofana Y|GK','Kossounou O|DF','Diomande O|DF','Sangare I|MD','Kessie F|MD','Pepe N|FW','Adingra S|FW'],
+  'Norway':['Nyland O|GK','Ajer K|DF','Ostigard L|DF','Ryerson J|DF','Odegaard M|MD','Nusa A|MD','Haland E|FW','Sorloth A|FW'],
+  'Mexico':['Rangel R|GK','Montes C|DF','Alvarez E|DF','Romo L|MD','Quinones J|FW','Gimenez S|FW'],
+  'Ecuador':['Galindez H|GK','Pacho W|DF','Hincapie P|DF','Caicedo M|MD','Plata G|FW','Valencia E|FW'],
+  'England':['Pickford J|GK','Alexander-Arnold T|DF','Stones J|DF','Maguire H|DF','Rice D|MD','Bellingham J|MD','Saka B|MD','Kane H|FW','Foden P|FW'],
+  'Democratic Republic of the Congo':['Epassy A|GK','Boyata D|DF','Luyindama C|DF','Bongonda T|MD','Wissa Y|FW','Bakambu C|FW'],
+  'United States':['Turner M|GK','McKenzie M|DF','Robinson M|DF','McKennie W|MD','Reyna G|MD','Weah T|FW','Pepi R|FW','Balogun F|FW'],
+  'Bosnia and Herzegovina':['Piric I|GK','Civic S|DF','Hadzikadunic E|DF','Besic M|MD','Pjanic M|MD','Dzeko E|FW'],
+  'Belgium':['Courtois T|GK','Vertonghen J|DF','Castagne T|DF','Tielemans Y|MD','De Bruyne K|MD','Doku J|FW','Lukaku R|FW'],
+  'Senegal':['Mendy E|GK','Sabaly Y|DF','Koulibaly K|DF','Gueye I|MD','Sarr I|FW'],
+  'Portugal':['Costa D|GK','Dias R|DF','Dalot D|DF','Fernandes B|MD','Vitinha|MD','Ronaldo C|FW','Leao R|FW'],
+  'Croatia':['Livakovic D|GK','Gvardiol J|DF','Lovren D|DF','Modric L|MD','Kovacic M|MD','Kramaric A|FW'],
+  'Spain':['Simon U|GK','Le Normand R|DF','Laporte A|DF','Rodri|MD','Pedri|MD','Yamal L|FW','Morata A|FW'],
+  'Austria':['Pentz P|GK','Posch S|DF','Danso K|DF','Laimer K|MD','Sabitzer M|MD','Arnautovic M|FW'],
+  'Switzerland':['Sommer Y|GK','Akanji M|DF','Schar F|DF','Xhaka G|MD','Freuler R|MD','Embolo B|FW'],
+  'Algeria':['Mbolhi R|GK','Mandi A|DF','Benlamri D|DF','Bennacer I|MD','Zerrouki R|MD','Gouiri A|FW'],
+  'Argentina':['E. Martinez|GK','Romero C|DF','Lisandro Martinez|DF','Molina N|DF','Mac Allister A|MD','De Paul R|MD','Messi L|FW','Alvarez J|FW'],
+  'Cape Verde':['Vozinha|GK','Bebeto|DF','Stopira|DF','Kevin Pina|MD','Helvia Varela|FW'],
+  'Australia':['Beach P|GK','Souttar H|DF','Circati A|DF','Irvine J|MD','Irankunda N|FW','Yengi T|FW'],
+  'Egypt':['El Shennawy A|GK','Hegazi A|DF','Ashraf O|DF','Elneny M|MD','Salah M|FW'],
+  'Colombia':['Vargas C|GK','Sanchez D|DF','Mina Y|DF','Rodriguez J|MD','Diaz L|FW'],
+  'Ghana':['Ati Zigi L|GK','Salisu M|DF','Partey T|MD','Kudus M|MD','Ayew A|FW'],
+  'Canada':['Borjan M|GK','Johnston A|DF','Miller K|DF','Eustaquio S|MD','Davies A|MD','David J|FW'],
+};
 // ── STATE ──
 let G=[];
 let showAll=false;
